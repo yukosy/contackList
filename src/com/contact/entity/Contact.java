@@ -1,3 +1,5 @@
+package com.contact.entity;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Map;
@@ -38,15 +40,15 @@ public abstract class Contact implements Serializable {
         return !phoneNumber.isEmpty();
     }
 
-    public LocalDateTime getCreated() {
+    public LocalDateTime getCreateTimeDate() {
         return created;
     }
 
-    public LocalDateTime getEdited() {
+    public LocalDateTime getEditTimeDate() {
         return edited;
     }
 
-    public void setEdited(LocalDateTime edited) {
+    public void setEditTimeDate(LocalDateTime edited) {
         this.edited = edited;
     }
 

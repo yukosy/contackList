@@ -1,3 +1,8 @@
+package com.contact.controller;
+
+import com.contact.entity.Contact;
+import com.contact.entity.PhoneBook;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -14,8 +19,7 @@ public class InputHandler {
 
     public void proceed() throws IOException {
         while (true) {
-            System.out.println("[menu] Enter action (add, list, search, count, exit):");
-            String action = scanner.nextLine();
+            String action = messagePrintAndInput("[menu] Enter action (add, list, search, count, exit):");
             switch (action) {
                 case "add":
                     processAddAction();
@@ -40,35 +44,26 @@ public class InputHandler {
     }
 
     private void processAddAction() {
-        System.out.println("Enter the type (person, organization):");
-        String contactType = scanner.nextLine();
+        String contactType = messagePrintAndInput("Enter the type (person, organization):");
         switch (contactType) {
             case "person" -> {
-                System.out.println("Enter the name:");
-                String name = scanner.nextLine();
-                System.out.println("Enter the surname:");
-                String surname = scanner.nextLine();
-                System.out.println("Enter the birth date:");
-                String birthDate = scanner.nextLine();
+                String name = messagePrintAndInput("Enter the name:");
+                String surname = messagePrintAndInput("Enter the surname:");
+                String birthDate = messagePrintAndInput("Enter the birth date:");
                 checkBirthDate(birthDate);
-                System.out.println("Enter the gender (M, F):");
-                String gender = scanner.nextLine();
+                String gender = messagePrintAndInput("Enter the gender (M, F):");
                 checkGender(gender);
-                System.out.println("Enter the number:");
-                String personNumber = scanner.nextLine();
+                String personNumber = messagePrintAndInput("Enter the number:");
                 phoneBook.addPerson(name, surname, birthDate, gender, personNumber);
             }
             case "organization" -> {
-                System.out.println("Enter the organization name:");
-                String organizationName = scanner.nextLine();
-                System.out.println("Enter the address:");
-                String address = scanner.nextLine();
-                System.out.println("Enter the number:");
-                String organizationNumber = scanner.nextLine();
+                String organizationName = messagePrintAndInput("Enter the organization name:");
+                String address = messagePrintAndInput("Enter the address:");
+                String organizationNumber = messagePrintAndInput("Enter the number:");
                 phoneBook.addOrganization(organizationName, address, organizationNumber);
             }
             default -> {
-                System.out.println(("Contact type [" + contactType + "] is not supported"));
+                System.out.println(("com.contact.entity.Contact type [" + contactType + "] is not supported"));
                 return;
             }
         }
@@ -84,8 +79,7 @@ public class InputHandler {
             return;
         }
         showContactsNames(all);
-        System.out.println("\n[list] Enter action ([number], back):");
-        String listAction = scanner.nextLine();
+        String listAction = messagePrintAndInput("\n[list] Enter action ([number], back):");
         try {
             int index = Integer.parseInt(listAction);
             Contact contact = all.get(index - 1);
@@ -106,8 +100,7 @@ public class InputHandler {
         }
 
         while (true) {
-            System.out.println("Enter search query:");
-            String query = scanner.nextLine();
+            String query = messagePrintAndInput("Enter search query:");
             List<Contact> searchResult = phoneBook.getSearchResult(query);
             if (searchResult.size() == 1) {
                 System.out.println("Found 1 result:");
@@ -115,9 +108,7 @@ public class InputHandler {
                 System.out.printf("Found %d results:%n", searchResult.size());
             }
             showContactsNames(searchResult);
-
-            System.out.println("\n[search] Enter action ([number], back, again):");
-            String searchAction = scanner.nextLine();
+            String searchAction = messagePrintAndInput("\n[search] Enter action ([number], back, again):");
             try {
                 int number = Integer.parseInt(searchAction);
                 processRecordActions(searchResult.get(number - 1));
@@ -142,8 +133,7 @@ public class InputHandler {
     private void processRecordActions(Contact contact) throws IOException {
         showContactInfo(contact);
         while (true) {
-            System.out.println("\n[record] Enter action (edit, delete, menu):");
-            String recordAction = scanner.nextLine();
+            String recordAction = messagePrintAndInput("\n[record] Enter action (edit, delete, menu):");
             switch (recordAction) {
                 case "edit":
                     processEditAction(contact);
@@ -162,10 +152,8 @@ public class InputHandler {
     }
 
     private void processEditAction(Contact contact) {
-        System.out.printf("Select a field (%s, number):%n", contact.getAllFieldsAsString());
-        String field = scanner.nextLine();
-        System.out.printf("Enter %s:%n", field);
-        String value = scanner.nextLine();
+        String field = messagePrintfAndInput("Select a field (%s, number):%n", contact.getAllFieldsAsString());
+        String value = messagePrintfAndInput("Enter %s:%n", field);
 
         contact.editField(field, value);
         System.out.println("Saved");
@@ -193,8 +181,8 @@ public class InputHandler {
                 contact.getFieldValue(key)));
         String number = contact.hasNumber() ? contact.getPhoneNumber() : "[no number]";
         System.out.println("Number: " + number);
-        System.out.println("Time created: " + contact.getCreated());
-        System.out.println("Time last edit: " + contact.getEdited());
+        System.out.println("Time created: " + contact.getCreateTimeDate());
+        System.out.println("Time last edit: " + contact.getEditTimeDate());
     }
 
     private void checkBirthDate(String birthDate) {
@@ -207,5 +195,15 @@ public class InputHandler {
         if (gender.isEmpty()) {
             System.out.println("Bad gender!");
         }
+    }
+
+    private String messagePrintAndInput(String message) {
+        System.out.println(message);
+        return scanner.nextLine();
+    }
+
+    private String messagePrintfAndInput(String message, String args) {
+        System.out.printf(message, args);
+        return scanner.nextLine();
     }
 }

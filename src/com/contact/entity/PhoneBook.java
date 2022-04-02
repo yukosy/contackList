@@ -1,3 +1,10 @@
+package com.contact.entity;
+
+import com.contact.controller.SerializationUtils;
+import com.contact.entity.Contact;
+import com.contact.entity.OrganizationalContact;
+import com.contact.entity.PersonalContact;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -17,7 +24,7 @@ public class PhoneBook {
     public void init() {
         try {
             if (args.length > 0) {
-                filePath = System.getProperty("user.dir") + "/Contacts/task/src/contacts/" + args[0];
+                filePath = System.getProperty("user.dir") + "/contackList/src/com/contact/files/" + args[0];
 
                 if (Files.exists(Path.of(filePath))) {
                     contacts = (List<Contact>) SerializationUtils.deserialize(filePath);
@@ -62,6 +69,10 @@ public class PhoneBook {
         org.setAddress(address);
         org.setPhoneNumber(number);
         contacts.add(org);
+    }
+
+    public void addContact(Contact contact) {
+        this.contacts.add(contact);
     }
 
     public void remove(Contact contact) {
