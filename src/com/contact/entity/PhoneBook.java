@@ -1,5 +1,6 @@
 package com.contact.entity;
 
+import com.contact.controller.Config;
 import com.contact.controller.SerializationUtils;
 import com.contact.entity.Contact;
 import com.contact.entity.OrganizationalContact;
@@ -24,7 +25,9 @@ public class PhoneBook {
     public void init() {
         try {
             if (args.length > 0) {
-                filePath = System.getProperty("user.dir") + "/contackList/src/com/contact/files/" + args[0];
+                Config config = new Config();
+                filePath = config.getValueFilePath("src/com/contact/resources/config.properties");
+                //filePath = System.getProperty("user.dir") + "/src/com/contact/resources/" + args[0];
 
                 if (Files.exists(Path.of(filePath))) {
                     contacts = (List<Contact>) SerializationUtils.deserialize(filePath);
