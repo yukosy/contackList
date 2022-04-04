@@ -19,7 +19,8 @@ public class InputHandler {
 
     public void proceed() throws IOException {
         while (true) {
-            String action = messagePrintAndInput("[menu] Enter action (add, list, search, count, exit):");
+            System.out.println("[menu] Enter action (add, list, search, count, exit):");
+            String action = scanner.nextLine();
             switch (action) {
                 case "add":
                     processAddAction();
@@ -44,22 +45,31 @@ public class InputHandler {
     }
 
     private void processAddAction() {
-        String contactType = messagePrintAndInput("Enter the type (person, organization):");
+        System.out.println("Enter the type (person, organization):");
+        String contactType = scanner.nextLine();
         switch (contactType) {
             case "person" -> {
-                String name = messagePrintAndInput("Enter the name:");
-                String surname = messagePrintAndInput("Enter the surname:");
-                String birthDate = messagePrintAndInput("Enter the birth date:");
+                System.out.println("Enter the name:");
+                String name = scanner.nextLine();
+                System.out.println("Enter the surname:");
+                String surname = scanner.nextLine();
+                System.out.println("Enter the birth date:");
+                String birthDate = scanner.nextLine();
                 checkBirthDate(birthDate);
-                String gender = messagePrintAndInput("Enter the gender (M, F):");
+                System.out.println("Enter the gender (M, F):");
+                String gender = scanner.nextLine();
                 checkGender(gender);
-                String personNumber = messagePrintAndInput("Enter the number:");
+                System.out.println("Enter the number:");
+                String personNumber = scanner.nextLine();
                 phoneBook.addPerson(name, surname, birthDate, gender, personNumber);
             }
             case "organization" -> {
-                String organizationName = messagePrintAndInput("Enter the organization name:");
-                String address = messagePrintAndInput("Enter the address:");
-                String organizationNumber = messagePrintAndInput("Enter the number:");
+                System.out.println("Enter the organization name:");
+                String organizationName = scanner.nextLine();
+                System.out.println("Enter the address:");
+                String address = scanner.nextLine();
+                System.out.println("Enter the number:");
+                String organizationNumber = scanner.nextLine();
                 phoneBook.addOrganization(organizationName, address, organizationNumber);
             }
             default -> {
@@ -79,7 +89,8 @@ public class InputHandler {
             return;
         }
         showContactsNames(all);
-        String listAction = messagePrintAndInput("\n[list] Enter action ([number], back):");
+        System.out.println("\n[list] Enter action ([number], back):");
+        String listAction = scanner.nextLine();
         try {
             int index = Integer.parseInt(listAction);
             Contact contact = all.get(index - 1);
@@ -100,7 +111,8 @@ public class InputHandler {
         }
 
         while (true) {
-            String query = messagePrintAndInput("Enter search query:");
+            System.out.println("Enter search query:");
+            String query = scanner.nextLine();
             List<Contact> searchResult = phoneBook.getSearchResult(query);
             if (searchResult.size() == 1) {
                 System.out.println("Found 1 result:");
@@ -108,7 +120,9 @@ public class InputHandler {
                 System.out.printf("Found %d results:%n", searchResult.size());
             }
             showContactsNames(searchResult);
-            String searchAction = messagePrintAndInput("\n[search] Enter action ([number], back, again):");
+
+            System.out.println("\n[search] Enter action ([number], back, again):");
+            String searchAction = scanner.nextLine();
             try {
                 int number = Integer.parseInt(searchAction);
                 processRecordActions(searchResult.get(number - 1));
@@ -133,7 +147,8 @@ public class InputHandler {
     private void processRecordActions(Contact contact) throws IOException {
         showContactInfo(contact);
         while (true) {
-            String recordAction = messagePrintAndInput("\n[record] Enter action (edit, delete, menu):");
+            System.out.println("\n[record] Enter action (edit, delete, menu):");
+            String recordAction = scanner.nextLine();
             switch (recordAction) {
                 case "edit":
                     processEditAction(contact);
@@ -152,8 +167,10 @@ public class InputHandler {
     }
 
     private void processEditAction(Contact contact) {
-        String field = messagePrintfAndInput("Select a field (%s, number):%n", contact.getAllFieldsAsString());
-        String value = messagePrintfAndInput("Enter %s:%n", field);
+        System.out.printf("Select a field (%s, number):%n", contact.getAllFieldsAsString());
+        String field = scanner.nextLine();
+        System.out.printf("Enter %s:%n", field);
+        String value = scanner.nextLine();
 
         contact.editField(field, value);
         System.out.println("Saved");
@@ -181,8 +198,8 @@ public class InputHandler {
                 contact.getFieldValue(key)));
         String number = contact.hasNumber() ? contact.getPhoneNumber() : "[no number]";
         System.out.println("Number: " + number);
-        System.out.println("Time created: " + contact.getCreateTimeDate());
-        System.out.println("Time last edit: " + contact.getEditTimeDate());
+        System.out.println("Time created: " + contact.getCreated());
+        System.out.println("Time last edit: " + contact.getEdited());
     }
 
     private void checkBirthDate(String birthDate) {
@@ -195,15 +212,5 @@ public class InputHandler {
         if (gender.isEmpty()) {
             System.out.println("Bad gender!");
         }
-    }
-
-    private String messagePrintAndInput(String message) {
-        System.out.println(message);
-        return scanner.nextLine();
-    }
-
-    private String messagePrintfAndInput(String message, String args) {
-        System.out.printf(message, args);
-        return scanner.nextLine();
     }
 }

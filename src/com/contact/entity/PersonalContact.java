@@ -1,5 +1,7 @@
 package com.contact.entity;
 
+import com.contact.entity.Contact;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -28,7 +30,7 @@ public class PersonalContact extends Contact implements Serializable {
 
     @Override
     public void editField(String fieldName, String newValue) {
-        this.setEditTimeDate(LocalDateTime.now());
+        this.setEdited(LocalDateTime.now());
         switch (fieldName) {
             case "name" -> this.name = newValue;
             case "surname" -> this.surname = newValue;

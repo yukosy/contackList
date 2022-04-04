@@ -1,12 +1,12 @@
 import com.contact.entity.PersonalContact;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 public class PersonalContactTest {
     PersonalContact person = new PersonalContact();
 
-    @BeforeEach
+    @Before
     public void initPerson() {
         person.setName("Mike");
         person.setSurname("Stanton");
@@ -20,6 +20,31 @@ public class PersonalContactTest {
         String field = "name";
         String newValue = "Nik";
         person.editField(field, newValue);
-        Assertions.assertEquals(person.getName(), "Nik");
+        Assert.assertEquals(person.getName(), "Nik");
+
+    }
+
+    @Test
+    public void setName() {
+        person.setName("Nik");
+        Assert.assertEquals(person.getName(), "Nik");
+    }
+
+    @Test
+    public void setSurname() {
+        person.setSurname("Smith");
+        Assert.assertEquals(person.getSurname(), "Smith");
+    }
+
+    @Test
+    public void setBirthDate() {
+        person.setBirthDate("1999-10-05");
+        Assert.assertEquals(person.getBirthDate(), "1999-10-05");
+    }
+
+    @Test
+    public void setGender() {
+        person.setGender("F");
+        Assert.assertEquals(person.getGender(), "F");
     }
 }

@@ -21,7 +21,7 @@ public class OrganizationalContact extends Contact implements Serializable {
 
     @Override
     public void editField(String fieldName, String newValue) {
-        this.setEditTimeDate(LocalDateTime.now());
+        this.setEdited(LocalDateTime.now());
         switch (fieldName) {
             case "name" -> this.name = newValue;
             case "address" -> this.address = newValue;

@@ -40,15 +40,15 @@ public abstract class Contact implements Serializable {
         return !phoneNumber.isEmpty();
     }
 
-    public LocalDateTime getCreateTimeDate() {
+    public LocalDateTime getCreated() {
         return created;
     }
 
-    public LocalDateTime getEditTimeDate() {
+    public LocalDateTime getEdited() {
         return edited;
     }
 
-    public void setEditTimeDate(LocalDateTime edited) {
+    public void setEdited(LocalDateTime edited) {
         this.edited = edited;
     }
 
