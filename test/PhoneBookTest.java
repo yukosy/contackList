@@ -1,5 +1,6 @@
 import com.contact.entity.OrganizationalContact;
 import com.contact.entity.PersonalContact;
+import com.contact.entity.PhoneBook;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
