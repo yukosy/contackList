@@ -1,3 +1,5 @@
+package com.contact.entity;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Map;
@@ -61,7 +63,7 @@ public class OrganizationalContact extends Contact implements Serializable {
 
     @Override
     public String toString() {
-        return "OrganizationalContact{" +
+        return "com.contact.entity.OrganizationalContact{" +
                 "name='" + name + '\'' +
                 ", address='" + address + '\'' +
                 '}';

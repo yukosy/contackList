@@ -1,3 +1,5 @@
+package com.contact.entity;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Map;

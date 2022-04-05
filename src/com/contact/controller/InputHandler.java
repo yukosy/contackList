@@ -1,3 +1,8 @@
+package com.contact.controller;
+
+import com.contact.entity.Contact;
+import com.contact.entity.PhoneBook;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -68,7 +73,7 @@ public class InputHandler {
                 phoneBook.addOrganization(organizationName, address, organizationNumber);
             }
             default -> {
-                System.out.println(("Contact type [" + contactType + "] is not supported"));
+                System.out.println(("com.contact.entity.Contact type [" + contactType + "] is not supported"));
                 return;
             }
         }
